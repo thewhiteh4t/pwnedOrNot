@@ -7,7 +7,10 @@ It uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api to test e
 This script has been tested on **Kali Linux 18.2** and **Ubuntu 18.04**.
 
 ## Installation
-It's a pure python script and relies on common python modules and does not need installation :
+```bash
+pip install cfscrape
+```
+It's a pure python script and relies on common python modules:
 * os
 * re
 * time
