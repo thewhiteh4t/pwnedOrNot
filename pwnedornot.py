@@ -14,7 +14,7 @@ W = '\033[0m'  # white
 
 def banner():
 
-	os.system('tput reset')
+	os.system('clear')
 	banner = """
 	                                  ______       _   __      __ 
 	    ____ _      ______  ___  ____/ / __ \_____/ | / /___  / /_
@@ -64,7 +64,7 @@ def main():
 				+ G + '[+]' + C + ' Fabricated  : ' + W + unicode(item['IsFabricated']) + '\n'
 				+ G + '[+]' + C + ' Verified    : ' + W + unicode(item['IsVerified']) + '\n'
 				+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
-				+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
+				+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList'])).encode('utf-8')
 	# r2 is the query for pastebin accounts if we get a 404, account does not have any dumps
 	r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
 	check2 = r2.status_code
