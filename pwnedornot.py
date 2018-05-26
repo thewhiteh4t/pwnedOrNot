@@ -5,6 +5,7 @@ import re
 import json
 import time
 import requests
+import cfscrape
 
 R = '\033[31m' # red
 G = '\033[32m' # green
@@ -27,6 +28,10 @@ def banner():
 
 def main():
 
+	print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W + '\n')
+	useragent = {'User-Agent' : 'pwnedornot'}
+	cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
+	
 	addr = raw_input(G + '[+]' + C + ' Enter Email Address : ' + W)
 	# starts calculating script runtime
 	start = time.time()
@@ -40,12 +45,8 @@ def main():
 		quit()
 	# r1 is the query for the account user enters
 	#check1 is the status code for the account if we get a 404, account is not breached
-	try:
-		r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr))
-		check1 = r1.status_code
-	except:
-		print ('\n' + R + '[-]' + C + ' You are not connected to internet...please check your connection... :(' + W)
-		exit()
+	r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr), headers= useragent, cookies= cookies, verify = True)
+	check1 = r1.status_code
 
 	if check1 == 404:
 		print ( '\n' + G + '[-]' + C + ' Account not pwned... :(' + W)
@@ -65,7 +66,7 @@ def main():
 				+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
 				+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
 	# r2 is the query for pastebin accounts if we get a 404, account does not have any dumps
-	r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr))
+	r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
 	check2 = r2.status_code
 
 	if check2 != 200:
