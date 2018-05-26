@@ -39,3 +39,8 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 ## Screenshots
 ![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/pwned1.png)
 ![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/pwned2.png)
+
+Also works on Kali Nethunter
+
+![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/nethunter1.png)
+![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/nethunter2.png)
