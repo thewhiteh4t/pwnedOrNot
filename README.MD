@@ -9,6 +9,7 @@ This script has been tested on **Kali Linux 18.2** and **Ubuntu 18.04**.
 ## Installation
 ```bash
 pip install cfscrape
+apt-get install nodejs
 ```
 It's a pure python script and relies on common python modules:
 * os
