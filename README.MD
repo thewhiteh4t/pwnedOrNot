@@ -26,12 +26,13 @@ pip2 install cfscrape
 python2 pwnedornot.py
 ```
 
-It's a pure python script and relies on common python modules:
+Other common standard python modules pwnedornot uses:
 * os
 * re
 * time
 * json
 * requests
+
 ## Usage
 ```bash
 git clone https://github.com/thewhiteh4t/pwnedOrNot.git
