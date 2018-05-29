@@ -21,9 +21,9 @@ apt-get install nodejs
 **Termux**
 ```bash
 pkg install python2
+pkg install git
 pip2 install requests
 pip2 install cfscrape
-python2 pwnedornot.py
 ```
 
 Other common standard python modules pwnedornot uses:
