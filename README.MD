@@ -4,26 +4,39 @@ pwnedOrNot is a python script which checks if the email account has been comprom
 
 It uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api to test email accounts and searches for the **password** in **Pastebin Dumps**
 
-This script has been tested on 
+This script has been tested on
 * **Kali Linux 18.2**
 * **Ubuntu 18.04**
 * **Kali Nethunter**
 * **Termux**
 
+**Works with both Python2 and Python3**
+
 ## Installation
 **Ubuntu and Kali**
 
 ```bash
+# Python 2
 pip install cfscrape
 apt-get install nodejs
+
+# Python 3
+apt-get install python3-pip
+pip3 install cfscrape
 ```
 
 **Termux**
 ```bash
+# Python 2
 pkg install python2
 pkg install git
 pip2 install requests
 pip2 install cfscrape
+
+# Python 3
+pkg install python2
+pip install requests
+pip install cfscrape
 ```
 
 Other common standard python modules pwnedornot uses:
