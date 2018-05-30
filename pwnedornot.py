@@ -12,6 +12,17 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
+try:
+    raw_input          # Python 2
+except NameError:
+    raw_input = input  # Python 3
+
+try:
+    unicode            # Python 2
+except NameError:
+    unicode = str      # Python 3
+
+
 def banner():
 
 	os.system('clear')
