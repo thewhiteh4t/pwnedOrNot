@@ -27,12 +27,12 @@ def banner():
 
 	os.system('clear')
 	banner = """
-	                                  ______       _   __      __ 
+	                                  ______       _   __      __
 	    ____ _      ______  ___  ____/ / __ \_____/ | / /___  / /_
 	   / __ \ | /| / / __ \/ _ \/ __  / / / / ___/  |/ / __ \/ __/
-	  / /_/ / |/ |/ / / / /  __/ /_/ / /_/ / /  / /|  / /_/ / /_  
-	 / .___/|__/|__/_/ /_/\___/\__,_/\____/_/  /_/ |_/\____/\__/  
-	/_/                                                                                                       
+	  / /_/ / |/ |/ / / / /  __/ /_/ / /_/ / /  / /|  / /_/ / /_
+	 / .___/|__/|__/_/ /_/\___/\__,_/\____/_/  /_/ |_/\____/\__/
+	/_/
 """
 	print (C + banner + W)
 	print (C + '	Developed by : ' + W + 'thewhiteh4t' + '\n')
@@ -42,7 +42,7 @@ def main():
 	print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W + '\n')
 	useragent = {'User-Agent' : 'pwnedornot'}
 	cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
-	
+
 	addr = raw_input(G + '[+]' + C + ' Enter Email Address : ' + W)
 	# starts calculating script runtime
 	start = time.time()
@@ -64,18 +64,18 @@ def main():
 		exit()
 	else:
 		print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
-		json1 = r1.content
+		json1 = r1.content.decode('utf-8')
 		simple1 = json.loads(json1)
-	
+
 		for item in simple1:
 			print ( '\n'
-				+ G + '[+]' + C + ' Breach      : ' + W + unicode(item['Title']) + '\n' 
-				+ G + '[+]' + C + ' Domain      : ' + W + unicode(item['Domain']) + '\n' 
+				+ G + '[+]' + C + ' Breach      : ' + W + unicode(item['Title']) + '\n'
+				+ G + '[+]' + C + ' Domain      : ' + W + unicode(item['Domain']) + '\n'
 				+ G + '[+]' + C + ' Date        : ' + W + unicode(item['BreachDate']) + '\n'
 				+ G + '[+]' + C + ' Fabricated  : ' + W + unicode(item['IsFabricated']) + '\n'
 				+ G + '[+]' + C + ' Verified    : ' + W + unicode(item['IsVerified']) + '\n'
 				+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
-				+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList'])).encode('utf-8')
+				+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
 	# r2 is the query for pastebin accounts if we get a 404, account does not have any dumps
 	r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
 	check2 = r2.status_code
@@ -85,7 +85,7 @@ def main():
 		print ('\n' + G + '[+]' + C + ' Completed in ' + W + str(time.time()-start) + C + ' seconds.' + W)
 		exit()
 
-	json2 = r2.content
+	json2 = r2.content.decode('utf-8')
 	simple2 = json.loads(json2)
 	# proceed is a flag
 	proceed = False
@@ -98,7 +98,7 @@ def main():
 	if proceed == True:
 		print ('\n' + G + '[+]' + C + ' Dumps Found...!' + W)
 		print ('\n' + G + '[+]' + C + ' Looking for Passwords...this may take a while...' + '\n' + W)
-	else:	
+	else:
 		skip()
 
 	for item in simple2:
@@ -107,13 +107,13 @@ def main():
 	 		page = requests.get('https://www.pastebin.com/raw/{0}'.format(link))
 	 		sc = page.status_code
 	 		if not sc == 404:
-	 			search = page.content
+	 			search = page.content.decode('utf-8')
 	 			passwd = re.findall('{0}:(\w+)'.format(addr), search)
 	 			if passwd:
 	 				print (G + '[+] ' + W + ' '.join(passwd))
 
 	quit()
-try:		
+try:
 	banner()
 	main()
 except KeyboardInterrupt:
