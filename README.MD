@@ -22,6 +22,7 @@ apt-get install nodejs
 
 # Python 3
 apt-get install python3-pip
+pip3 install requests
 pip3 install cfscrape
 ```
 
@@ -52,6 +53,17 @@ git clone https://github.com/thewhiteh4t/pwnedOrNot.git
 cd pwnedOrNot/
 python pwnedornot.py
 ```
+
+```bash
+python pwnedornot.py -h
+usage: pwnedornot.py [-h] [-e EMAIL] [-f FILE]
+
+optional arguments:
+  -h, --help              show this help message and exit
+  -e EMAIL, --email EMAIL Email account you want to test
+  -f FILE, --file FILE    Load a file with multiple email accounts
+```
+
 ## Features
 [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) offers a lot of information about the compromised email, some useful information is displayed by this script:
 * Name of Breach
