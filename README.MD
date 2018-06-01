@@ -46,6 +46,7 @@ Other common standard python modules pwnedornot uses:
 * time
 * json
 * requests
+* argparse
 
 ## Usage
 ```bash
@@ -73,8 +74,6 @@ optional arguments:
 * Verification Status
 * Retirement status
 * Spam Status
-* Source of Dump
-* ID of Dump
 
 And with all this information **pwnedOrNot** can easily find passwords for compromised emails if the dump is accessible and it contains the password
 ## Screenshots
