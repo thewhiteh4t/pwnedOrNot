@@ -24,7 +24,7 @@ try:
 except NameError:
 	unicode = str      # Python 3
 
-version = '1.0.5'
+version = '1.0.6'
 
 def updated(version):
     updated_version = requests.get('https://github.com/thewhiteh4t/pwnedOrNot/blob/master/version.txt')
