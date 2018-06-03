@@ -2,6 +2,7 @@
 
 import os
 import re
+import sys
 import json
 import time
 import argparse
@@ -24,6 +25,14 @@ except NameError:
 	unicode = str      # Python 3
 
 version = '1.0.5'
+
+def updated(version):
+    updated_version = requests.get('https://github.com/thewhiteh4t/pwnedOrNot/blob/master/version.txt')
+    updated_version = updated_version.text.split(' ')[1]
+    print(updated_version)
+    if updated_version != version:
+        return updated_version
+    return True
 
 # commandline arguments
 ap = argparse.ArgumentParser()
@@ -48,7 +57,11 @@ if not status:
 	pass
 
 def banner():
-	os.system('clear')
+        if sys.platform == 'win32':
+                os.system('cls') # Windows
+        else:
+                os.system('clear') # UNIX
+
 	banner = """
 	                                  ______       _   __      __
 	    ____ _      ______  ___  ____/ / __ \_____/ | / /___  / /_
@@ -59,7 +72,9 @@ def banner():
 	"""
 	print (C + banner + W)
 	print (C + '	Developed by : ' + W + 'thewhiteh4t')
-	print (C + '	Version      : ' + W + version + '\n')
+	print (C + '    Version      : ' + W + version)
+        if not updated(version):
+            print (C + '    there is a new updated version: ' + R + updated(version) + W + '\n')
 
 def main():
 	global addr
