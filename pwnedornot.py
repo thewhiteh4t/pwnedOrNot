@@ -41,7 +41,7 @@ def update():
 			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
 			exit()
 	else:
-		print (G + '[+]' + C + ' Script it up-to-date...' + '\n')
+		print (G + '[+]' + C + ' Script is up-to-date...' + '\n')
 
 
 # commandline arguments
