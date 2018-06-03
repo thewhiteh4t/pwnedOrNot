@@ -8,6 +8,7 @@ import time
 import argparse
 import requests
 import cfscrape
+import subprocess
 
 R = '\033[31m' # red
 G = '\033[32m' # green
@@ -24,15 +25,22 @@ try:
 except NameError:
 	unicode = str      # Python 3
 
-version = '1.0.5'
+version = '1.0.7'
 
-def updated(version):
-    updated_version = requests.get('https://github.com/thewhiteh4t/pwnedOrNot/blob/master/version.txt')
-    updated_version = updated_version.text.split(' ')[1]
-    print(updated_version)
-    if updated_version != version:
-        return updated_version
-    return True
+def update():
+	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
+	updated_version = requests.get('https://raw.githubusercontent.com/thewhiteh4t/pwnedOrNot/master/version.txt')
+	updated_version = updated_version.text.split(' ')[1]
+	if updated_version != version:
+		print (G + '[!]' + C + ' A New Version is Available : ' + W + updated_version)
+		ans = raw_input(G + '[!]' + C + ' Update ? [y/n] : ' + W)
+		if ans == 'y':
+			print ('\n' + G + '[+]' + C + ' Updating...' + '\n')
+			subprocess.Popen(['git', 'pull'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
+			exit()
+		else:
+			print ('\n' + G + '[+]' + C + ' Script it up-to-date...')
 
 # commandline arguments
 ap = argparse.ArgumentParser()
@@ -57,10 +65,10 @@ if not status:
 	pass
 
 def banner():
-        if sys.platform == 'win32':
-                os.system('cls') # Windows
-        else:
-                os.system('clear') # UNIX
+	if sys.platform == 'win32':
+		os.system('cls') # Windows
+	else:
+		os.system('clear') # UNIX
 
 	banner = """
 	                                  ______       _   __      __
@@ -72,9 +80,7 @@ def banner():
 	"""
 	print (C + banner + W)
 	print (C + '	Developed by : ' + W + 'thewhiteh4t')
-	print (C + '    Version      : ' + W + version)
-        if not updated(version):
-            print (C + '    there is a new updated version: ' + R + updated(version) + W + '\n')
+	print (C + '	Version      : ' + W + version + '\n')
 
 def main():
 	global addr
@@ -231,6 +237,7 @@ def main():
 	quit()
 try:
 	banner()
+	update()
 	main()
 except KeyboardInterrupt:
 	print ('\n' + R + '[!]' + C + ' Keyboard Interrupt.' + W)
