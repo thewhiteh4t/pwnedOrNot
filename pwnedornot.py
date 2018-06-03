@@ -31,6 +31,7 @@ def update():
 	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
 	updated_version = requests.get('https://raw.githubusercontent.com/thewhiteh4t/pwnedOrNot/master/version.txt')
 	updated_version = updated_version.text.split(' ')[1]
+	updated_version = updated_version.strip()
 	if updated_version != version:
 		print (G + '[!]' + C + ' A New Version is Available : ' + W + updated_version)
 		ans = raw_input(G + '[!]' + C + ' Update ? [y/n] : ' + W)
@@ -39,8 +40,9 @@ def update():
 			subprocess.Popen(['git', 'pull'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
 			exit()
-		else:
-			print ('\n' + G + '[+]' + C + ' Script it up-to-date...')
+	else:
+		print (G + '[+]' + C + ' Script it up-to-date...' + '\n')
+
 
 # commandline arguments
 ap = argparse.ArgumentParser()
