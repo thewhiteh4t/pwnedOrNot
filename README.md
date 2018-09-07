@@ -48,3 +48,6 @@ optional arguments:
   -e EMAIL, --email EMAIL Email account you want to test
   -f FILE, --file FILE    Load a file with multiple email accounts
 ```
+
+## Demo
+[YouTube](https://www.youtube.com/watch?v=R_Y_QzVmERA)
