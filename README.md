@@ -31,34 +31,14 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 * **Termux**
 
 ## Installation
-**Ubuntu and Kali**
+**Ubuntu / Kali Linux / Nethunter / Termux**
 
 ```bash
 chmod 777 install.sh
 ./install.sh
 ```
 
-**Termux**
-```bash
-# Python 2
-pkg install python2
-pkg install git
-pip2 install requests
-pip2 install cfscrape
-
-# Python 3
-pkg install python
-pip install requests
-pip install cfscrape
-```
-
 ## Usage
-```bash
-git clone https://github.com/thewhiteh4t/pwnedOrNot.git
-cd pwnedOrNot/
-python pwnedornot.py
-```
-
 ```bash
 python pwnedornot.py -h
 usage: pwnedornot.py [-h] [-e EMAIL] [-f FILE]
