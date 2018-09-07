@@ -40,14 +40,6 @@ pip install requests
 pip install cfscrape
 ```
 
-Other common standard python modules pwnedornot uses:
-* os
-* re
-* time
-* json
-* requests
-* argparse
-
 ## Usage
 ```bash
 git clone https://github.com/thewhiteh4t/pwnedOrNot.git
@@ -76,11 +68,3 @@ optional arguments:
 * Spam Status
 
 And with all this information **pwnedOrNot** can easily find passwords for compromised emails if the dump is accessible and it contains the password
-## Screenshots
-![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/pwned1.png)
-![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/pwned2.png)
-
-Also works on Kali Nethunter
-
-![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/nethunter1.png)
-![example](https://github.com/thewhiteh4t/pwnedOrNot/blob/master/nethunter2.png)
