@@ -34,14 +34,8 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 **Ubuntu and Kali**
 
 ```bash
-# Python 2
-pip install cfscrape
-apt-get install nodejs
-
-# Python 3
-apt-get install python3-pip
-pip3 install requests
-pip3 install cfscrape
+chmod 777 install.sh
+./install.sh
 ```
 
 **Termux**
