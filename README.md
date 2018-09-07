@@ -1,4 +1,4 @@
-<h1 align="center">pwnedOrNot</h1>
+<p align="center"><img src="https://i.imgur.com/xgaojFM.png"></p>
 <h4 align="center">
 Find Passwords for Compromised Email Accounts
 </h4>
