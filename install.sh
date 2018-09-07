@@ -11,8 +11,4 @@ pip install requests &>> install.log
 echo '    CfScrape'
 pip install cfscrape &>> install.log
 echo
-echo '[!] Creating Symlink...'
-echo
-ln -s $PWD/pwnedornot.py /usr/local/bin/pwnedornot
-chmod 777 /usr/local/bin/pwnedornot
-echo '[!] Installed...Launch by Typing pwnedornot'
+echo '[!] Installed.'
