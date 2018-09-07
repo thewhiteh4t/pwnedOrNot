@@ -38,6 +38,8 @@ chmod 777 install.sh
 ./install.sh
 ```
 
+[![asciicast](https://asciinema.org/a/200221.png)](https://asciinema.org/a/200221)
+
 ## Usage
 ```bash
 python pwnedornot.py -h
