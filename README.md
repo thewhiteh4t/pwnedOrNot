@@ -51,5 +51,7 @@ optional arguments:
   -f FILE, --file FILE    Load a file with multiple email accounts
 ```
 
+[![asciicast](https://asciinema.org/a/200225.png)](https://asciinema.org/a/200225)
+
 ## Demo
 [YouTube](https://www.youtube.com/watch?v=R_Y_QzVmERA)
