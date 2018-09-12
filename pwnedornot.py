@@ -25,7 +25,7 @@ try:
 except NameError:
 	unicode = str      # Python 3
 
-version = '1.0.7'
+version = '1.0.8'
 
 def update():
 	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
@@ -104,32 +104,7 @@ def main():
 		print ('\n' + R + '[-]' + C + ' No Dumps Found... :(' + W)
 		quit()
 
-	def check():
-
-		# sleep 2 seconds to avoid rate limit
-		time.sleep(2)
-		# r1 is the query for the account user enters
-		r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr), headers= useragent, cookies= cookies, verify = True)
-		#check1 is the status code for the account if we get a 404, account is not breached
-		check1 = r1.status_code
-
-		if check1 == 404:
-			print ( '\n' + R + '[-]' + C + ' Account not pwned... :(' + W)
-			exit()
-		else:
-			print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
-			json1 = r1.content.decode('utf8')
-			simple1 = json.loads(json1)
-
-			for item in simple1:
-				print ( '\n'
-					+ G + '[+]' + C + ' Breach      : ' + W + unicode(item['Title']) + '\n'
-					+ G + '[+]' + C + ' Domain      : ' + W + unicode(item['Domain']) + '\n'
-					+ G + '[+]' + C + ' Date        : ' + W + unicode(item['BreachDate']) + '\n'
-					+ G + '[+]' + C + ' Fabricated  : ' + W + unicode(item['IsFabricated']) + '\n'
-					+ G + '[+]' + C + ' Verified    : ' + W + unicode(item['IsVerified']) + '\n'
-					+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
-					+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
+	def dump():
 		# r2 is the query for pastebin accounts if we get a 404, account does not have any dumps
 		r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
 		check2 = r2.status_code
@@ -167,6 +142,37 @@ def main():
 					passwd = re.findall('{0}:(\w+)'.format(addr), search)
 					if passwd:
 						print (G + '[+] ' + W + ' '.join(passwd))
+
+	def check():
+		print ('\n' + G + '[+]' + C + ' Looking for Breaches...' + W)
+		# sleep 2 seconds to avoid rate limit
+		time.sleep(2)
+		# r1 is the query for the account user enters
+		r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr), headers= useragent, cookies= cookies, verify = True)
+		#check1 is the status code for the account if we get a 404, account is not breached
+		check1 = r1.status_code
+
+		if check1 == 404:
+			print ('\n' + R + '[-]' + C + ' No Breaches Found... :(' + W)
+			print ('\n' + G + '[+]' + C + ' Looking for Dumps...' + W)
+			dump()
+			exit()
+		else:
+			print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
+			json1 = r1.content.decode('utf8')
+			simple1 = json.loads(json1)
+
+			for item in simple1:
+				print ( '\n'
+					+ G + '[+]' + C + ' Breach      : ' + W + unicode(item['Title']) + '\n'
+					+ G + '[+]' + C + ' Domain      : ' + W + unicode(item['Domain']) + '\n'
+					+ G + '[+]' + C + ' Date        : ' + W + unicode(item['BreachDate']) + '\n'
+					+ G + '[+]' + C + ' Fabricated  : ' + W + unicode(item['IsFabricated']) + '\n'
+					+ G + '[+]' + C + ' Verified    : ' + W + unicode(item['IsVerified']) + '\n'
+					+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
+					+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
+
+		dump()
 
 	def filecheck():
 		time.sleep(2)
