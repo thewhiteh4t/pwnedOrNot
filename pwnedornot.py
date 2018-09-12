@@ -37,7 +37,7 @@ def update():
 		ans = raw_input(G + '[!]' + C + ' Update ? [y/n] : ' + W)
 		if ans == 'y':
 			print ('\n' + G + '[+]' + C + ' Updating...' + '\n')
-			subprocess.Popen(['git', 'pull'], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+			subprocess.call(['git', 'pull'])
 			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
 			exit()
 	else:
