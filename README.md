@@ -1,4 +1,4 @@
-<h1 align="center">pwnedOrNot</h1>
+<p align="center"><img src="https://i.imgur.com/xgaojFM.png"></p>
 <h4 align="center">
 Find Passwords for Compromised Email Accounts
 </h4>
@@ -38,6 +38,8 @@ chmod 777 install.sh
 ./install.sh
 ```
 
+[![asciicast](https://asciinema.org/a/200221.png)](https://asciinema.org/a/200221)
+
 ## Usage
 ```bash
 python pwnedornot.py -h
@@ -48,3 +50,8 @@ optional arguments:
   -e EMAIL, --email EMAIL Email account you want to test
   -f FILE, --file FILE    Load a file with multiple email accounts
 ```
+
+[![asciicast](https://asciinema.org/a/200225.png)](https://asciinema.org/a/200225)
+
+## Demo
+[YouTube](https://www.youtube.com/watch?v=R_Y_QzVmERA)
