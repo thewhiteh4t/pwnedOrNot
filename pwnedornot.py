@@ -84,8 +84,7 @@ def banner():
 	print (G + '[>]' + C + ' Version    : ' + W + version + '\n')
 
 def main():
-	global addr
-	global file
+	global addr, file
 
 	print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W + '\n')
 	useragent = {'User-Agent' : 'pwnedornot'}
@@ -99,56 +98,65 @@ def main():
 		print ('\n' + G + '[+]' + C + ' Completed in ' + W + str(time.time()-start) + C + ' seconds.' + W)
 		exit()
 
-	# skip function is called if no pastebin dumps are present
-	def skip():
-		print ('\n' + R + '[-]' + C + ' No Dumps Found... :(' + W)
-		quit()
-
 	def dump():
+		dumplist = []
 		# r2 is the query for pastebin accounts if we get a 404, account does not have any dumps
-		r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
+		r2 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent, cookies= cookies)
 		check2 = r2.status_code
 
 		if check2 != 200:
 			print ('\n' + R + '[-]' + C + ' No Dumps Found... :(' + W)
-			print ('\n' + G + '[+]' + C + ' Completed in ' + W + str(time.time()-start) + C + ' seconds.' + W)
-			exit()
-
-		json2 = r2.content.decode('utf-8')
-		simple2 = json.loads(json2)
-
-		# proceed is a flag
-		proceed = False
-		for item in simple2:
-			if item['Source'] != 'Pastebin':
-				continue
-			if (item['Source']) == 'Pastebin':
-				proceed = True
-		#proceed tells the script to continue if the source is pastebin also it prevents multiple print statements
-		if proceed == True:
-			print ('\n' + G + '[+]' + C + ' Dumps Found...!' + W)
-			print ('\n' + G + '[+]' + C + ' Looking for Passwords...this may take a while...' + '\n' + W)
+			#print ('\n' + G + '[+]' + C + ' Completed in ' + W + str(time.time()-start) + C + ' seconds.' + W)
 		else:
-			skip()
+			print ('\n' + G + '[+]' + C + ' Dumps Available...!' + W)
+			print ('\n' + G + '[+]' + C + ' Getting Dumps...this may take a while...' + W)
+			json2 = r2.content.decode('utf-8')
+			simple2 = json.loads(json2)
 
-		for item in simple2:
-			if (item['Source']) == 'Pastebin':
-				link = item['Id']
-				page = requests.get('https://www.pastebin.com/raw/{0}'.format(link))
-				sc = page.status_code
+			# checking if dump is accessible
+			for item in simple2:
+				if (item['Source']) == 'Pastebin':
+					link = item['Id']
+					url = 'https://www.pastebin.com/raw/{}'.format(link)
+					page = requests.get(url)
+					sc = page.status_code
+					if sc != 404:
+						dumplist.append(url)
 
-				if not sc == 404:
-					search = page.content.decode('utf-8')
-					passwd = re.findall('{0}:(\w+)'.format(addr), search)
-					if passwd:
-						print (G + '[+] ' + W + ' '.join(passwd))
+				elif (item['Source']) == 'AdHocUrl':
+					url = item['Id']
+					try:
+						page = requests.get(url)
+						sc = page.status_code
+						if sc != 404:
+							dumplist.append(url)
+					except requests.exceptions.ConnectionError:
+						pass
+
+			print ('\n' + G + '[+]' + C + ' Got ' + W + str(len(dumplist)) + C + ' Dumps' + W)
+
+		if str(len(dumplist)) != '0':
+			print ('\n' + G + '[+]' + C + ' Passwords:' + W + '\n')
+
+			for entry in dumplist:
+				page = requests.get(entry)
+				dict = page.content.decode('utf-8')
+				passwd = re.search('{}:(\w+)'.format(addr), dict)
+				if passwd:
+					print (G + '[+] ' + W + passwd.group(1))
+				elif not passwd:
+					for line in dict.splitlines():
+						passwd = re.search('(.*{}.*)'.format(addr), line)
+						if passwd:
+							print (G + '[+] ' + W + passwd.group(0))
+
 
 	def check():
 		print ('\n' + G + '[+]' + C + ' Looking for Breaches...' + W)
 		# sleep 2 seconds to avoid rate limit
 		time.sleep(2)
 		# r1 is the query for the account user enters
-		r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr), headers= useragent, cookies= cookies, verify = True)
+		r1 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, cookies= cookies, verify = True)
 		#check1 is the status code for the account if we get a 404, account is not breached
 		check1 = r1.status_code
 
@@ -156,7 +164,7 @@ def main():
 			print ('\n' + R + '[-]' + C + ' No Breaches Found... :(' + W)
 			print ('\n' + G + '[+]' + C + ' Looking for Dumps...' + W)
 			dump()
-			exit()
+
 		else:
 			print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
 			json1 = r1.content.decode('utf8')
@@ -172,11 +180,11 @@ def main():
 					+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
 					+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
 
-		dump()
+			dump()
 
 	def filecheck():
 		time.sleep(2)
-		r3 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{0}'.format(addr), headers= useragent, cookies= cookies, verify = True)
+		r3 = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, cookies= cookies, verify = True)
 		check3 = r3.status_code
 
 		if check3 == 404:
@@ -196,36 +204,7 @@ def main():
 					+ G + '[+]' + C + ' Retired     : ' + W + unicode(item['IsRetired']) + '\n'
 					+ G + '[+]' + C + ' Spam        : ' + W + unicode(item['IsSpamList']))
 
-			r4 = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{0}'.format(addr), headers= useragent, cookies= cookies)
-			check4 = r4.status_code
-
-			if check4 != 200:
-				print ('\n' + R + '[-]' + C + ' No Dumps Found... :(' + W)
-			else:
-				json2 = r4.content.decode('utf-8')
-				simple2 = json.loads(json2)
-
-				proceed = False
-				for item in simple2:
-					if item['Source'] != 'Pastebin':
-						continue
-					if (item['Source']) == 'Pastebin':
-						proceed = True
-
-				if proceed == True:
-					print ('\n' + G + '[+]' + C + ' Dumps Found...!' + W)
-					print ('\n' + G + '[+]' + C + ' Looking for Passwords...this may take a while...' + '\n' + W)
-
-				for item in simple2:
-					if (item['Source']) == 'Pastebin':
-						link = item['Id']
-						page = requests.get('https://www.pastebin.com/raw/{0}'.format(link))
-						sc = page.status_code
-						if not sc == 404:
-							search = page.content.decode('utf-8')
-							passwd = re.findall('{0}:(\w+)'.format(addr), search)
-							if passwd:
-								print (G + '[+] ' + W + ' '.join(passwd))
+		dump()
 
 	if not status and not fparse:
 		addr = raw_input(G + '[+]' + C + ' Enter Email Address : ' + W)
@@ -239,8 +218,9 @@ def main():
 			for line in dict:
 				line = line.strip()
 				addr = line
-				print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr))
-				filecheck()
+				if addr != '':
+					print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr))
+					check()
 	quit()
 try:
 	banner()
