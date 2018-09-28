@@ -25,7 +25,7 @@ try:
 except NameError:
 	unicode = str      # Python 3
 
-version = '1.0.9'
+version = '1.1.0'
 
 def update():
 	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
@@ -36,8 +36,9 @@ def update():
 		print (G + '[!]' + C + ' A New Version is Available : ' + W + updated_version)
 		ans = raw_input(G + '[!]' + C + ' Update ? [y/n] : ' + W)
 		if ans == 'y':
-			print ('\n' + G + '[+]' + C + ' Updating...' + '\n')
-			subprocess.call(['git', 'pull'])
+			print ('\n' + G + '[+]' + C + ' Updating...' + '\n' + W)
+			subprocess.check_output(['git', 'reset', '--hard', 'origin/master'])
+			subprocess.check_output(['git', 'pull'])
 			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
 			exit()
 	else:
