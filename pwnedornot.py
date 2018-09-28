@@ -25,7 +25,7 @@ try:
 except NameError:
 	unicode = str      # Python 3
 
-version = '1.0.8'
+version = '1.0.9'
 
 def update():
 	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
