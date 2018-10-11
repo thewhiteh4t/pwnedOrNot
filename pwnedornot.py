@@ -15,21 +15,15 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-try:
-	raw_input          # Python 2
-except NameError:
-	raw_input = input  # Python 3
+if sys.version_info[0] >= 3:
+    raw_input = input
+    unicode = str
 
-try:
-	unicode            # Python 2
-except NameError:
-	unicode = str      # Python 3
-
-version = '1.1.0'
+version = '1.1.1'
 
 def update():
 	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
-	updated_version = requests.get('https://raw.githubusercontent.com/thewhiteh4t/pwnedOrNot/master/version.txt')
+	updated_version = requests.get('https://raw.githubusercontent.com/thewhiteh4t/pwnedOrNot/master/version.txt', timeout = 5)
 	updated_version = updated_version.text.split(' ')[1]
 	updated_version = updated_version.strip()
 	if updated_version != version:
@@ -107,11 +101,10 @@ def main():
 
 		if check2 != 200:
 			print ('\n' + R + '[-]' + C + ' No Dumps Found... :(' + W)
-			#print ('\n' + G + '[+]' + C + ' Completed in ' + W + str(time.time()-start) + C + ' seconds.' + W)
 		else:
 			print ('\n' + G + '[+]' + C + ' Dumps Available...!' + W)
 			print ('\n' + G + '[+]' + C + ' Getting Dumps...this may take a while...' + W)
-			json2 = r2.content.decode('utf-8')
+			json2 = r2.content.decode('utf-8', 'ignore')
 			simple2 = json.loads(json2)
 
 			# checking if dump is accessible
@@ -119,7 +112,7 @@ def main():
 				if (item['Source']) == 'Pastebin':
 					link = item['Id']
 					url = 'https://www.pastebin.com/raw/{}'.format(link)
-					page = requests.get(url)
+					page = requests.get(url, timeout = 5)
 					sc = page.status_code
 					if sc != 404:
 						dumplist.append(url)
@@ -127,7 +120,7 @@ def main():
 				elif (item['Source']) == 'AdHocUrl':
 					url = item['Id']
 					try:
-						page = requests.get(url)
+						page = requests.get(url, timeout = 5)
 						sc = page.status_code
 						if sc != 404:
 							dumplist.append(url)
@@ -141,7 +134,7 @@ def main():
 
 			for entry in dumplist:
 				page = requests.get(entry)
-				dict = page.content.decode('utf-8')
+				dict = page.content.decode('utf-8', 'ignore')
 				passwd = re.search('{}:(\w+)'.format(addr), dict)
 				if passwd:
 					print (G + '[+] ' + W + passwd.group(1))
@@ -150,7 +143,6 @@ def main():
 						passwd = re.search('(.*{}.*)'.format(addr), line)
 						if passwd:
 							print (G + '[+] ' + W + passwd.group(0))
-
 
 	def check():
 		print ('\n' + G + '[+]' + C + ' Looking for Breaches...' + W)
@@ -168,7 +160,7 @@ def main():
 
 		else:
 			print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
-			json1 = r1.content.decode('utf8')
+			json1 = r1.content.decode('utf8', 'ignore')
 			simple1 = json.loads(json1)
 
 			for item in simple1:
@@ -192,7 +184,7 @@ def main():
 			print ( '\n' + R + '[-]' + C + ' Account not pwned... :(' + W)
 		else:
 			print ( '\n' + G + '[!]' + C + ' Account pwned...Listing Breaches...' + W)
-			json1 = r3.content.decode('utf8')
+			json1 = r3.content.decode('utf8', 'ignore')
 			simple1 = json.loads(json1)
 
 			for item in simple1:
