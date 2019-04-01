@@ -220,6 +220,7 @@ def dump():
 				pass
 
 def domains_list():
+	domains = []
 	print ('\n' + G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
 	r = requests.get('https://haveibeenpwned.com/api/v2/breaches')
 	json_out = r.content.decode('utf8', 'ignore')
