@@ -20,7 +20,7 @@ if sys.version_info[0] != 3:
 	print (R + '\n[-]' + C + ' Only Python 3 is Supported.\n')
 	exit()
 
-version = '1.1.3'
+version = '1.1.4'
 
 useragent = {'User-Agent' : 'pwnedornot'}
 cookies = ''
@@ -73,9 +73,6 @@ def main():
 		domains_list()
 	elif check_domain:
 		domain_check()
-	elif addr == None and domain != None or file == None and domain != None:
-		print ('\n' + R + '[-]' + C + ' Error : Use -e or -f with Domain Filter')
-		exit()
 	elif addr == None and nodumps == True or file == None and nodumps == True:
 		print ('\n' + R + '[+]' + C + ' Error : Use -e or if with -n')
 		exit()
