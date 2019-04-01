@@ -20,7 +20,7 @@ if sys.version_info[0] != 3:
 	print (R + '\n[-]' + C + ' Only Python 3 is Supported.\n')
 	exit()
 
-version = '1.1.2'
+version = '1.1.3'
 
 useragent = {'User-Agent' : 'pwnedornot'}
 cookies = ''
