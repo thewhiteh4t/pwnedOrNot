@@ -5,7 +5,6 @@ OSINT Tool to Find Passwords for Compromised Email Accounts
 <p align="center">
 <img src="https://img.shields.io/badge/HaveIBeenPwned-v2-blue.svg?style=plastic">
 <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
-<img src="https://img.shields.io/badge/Python-2-brightgreen.svg?style=plastic">
 <img src="https://img.shields.io/badge/Termux-✔-red.svg?style=plastic">
 <img src="https://img.shields.io/badge/NetHunter-✔-red.svg?style=plastic">
 </p>
