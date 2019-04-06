@@ -15,7 +15,7 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.1.6'
+version = '1.1.7'
 
 useragent = {'User-Agent' : 'pwnedornot'}
 cookies = ''
@@ -161,28 +161,28 @@ def dump():
 		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
 
-	for item in simple_out:
-		time.sleep(1.6)
+		for item in simple_out:
+			time.sleep(1.6)
 
-		if (item['Source']) == 'Pastebin':
-			link = item['Id']
-			try:
-				url = 'https://www.pastebin.com/raw/{}'.format(link)
-				page = requests.get(url, timeout = 5)
-				sc = page.status_code
-				if sc != 404:
-					dumplist.append(url)
-			except requests.exceptions.ConnectionError:
-				pass
-		elif (item['Source']) == 'AdHocUrl':
-			url = item['Id']
-			try:
-				page = requests.get(url, timeout = 5)
-				sc = page.status_code
-				if sc != 404:
-					dumplist.append(url)
-			except requests.exceptions.ConnectionError:
-				pass
+			if (item['Source']) == 'Pastebin':
+				link = item['Id']
+				try:
+					url = 'https://www.pastebin.com/raw/{}'.format(link)
+					page = requests.get(url, timeout = 5)
+					sc = page.status_code
+					if sc != 404:
+						dumplist.append(url)
+				except requests.exceptions.ConnectionError:
+					pass
+			elif (item['Source']) == 'AdHocUrl':
+				url = item['Id']
+				try:
+					page = requests.get(url, timeout = 5)
+					sc = page.status_code
+					if sc != 404:
+						dumplist.append(url)
+				except requests.exceptions.ConnectionError:
+					pass
 
 	print ('\n' + G + '[+]' + C + ' Found ' + W + str(len(dumplist)) + C + ' Dumps' + W)
 
