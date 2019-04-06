@@ -127,7 +127,7 @@ def filtered_check():
 	sc = rqst.status_code
 
 	if sc == 404:
-		print (R + '\t\t [ Not Breached ]' + W)
+		print (R + ' [ Not Breached ]' + W)
 		if nodumps is not True:
 			dump()
 
