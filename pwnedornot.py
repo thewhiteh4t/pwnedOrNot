@@ -15,10 +15,10 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.1.7'
+version = '1.1.8'
 
 useragent = {'User-Agent' : 'pwnedornot'}
-cookies = ''
+#cookies = ''
 start = ''
 
 def update():
@@ -60,8 +60,8 @@ def banner():
 
 def main():
 	global addr, cookies, start
-	print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W)
-	cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
+	#print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W)
+	#cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
 	start = time.time()
 
 	if list_domain is True:
@@ -97,7 +97,7 @@ def main():
 
 def check():
 	print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, cookies= cookies, verify = True)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, verify = True)
 	sc = rqst.status_code
 
 	if sc == 404:
@@ -107,7 +107,7 @@ def check():
 
 	else:
 		print (G + ' [ pwned ]' + W)
-		json_out = rqst.content.decode('utf8', 'ignore')
+		json_out = rqst.content.decode()
 		simple_out = json.loads(json_out)
 		for item in simple_out:
 			print ( '\n'
@@ -123,7 +123,7 @@ def check():
 
 def filtered_check():
 	print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}?domain={}'.format(addr, domain), headers= useragent, cookies= cookies, verify = True)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}?domain={}'.format(addr, domain), headers= useragent, verify = True)
 	sc = rqst.status_code
 
 	if sc == 404:
@@ -133,7 +133,7 @@ def filtered_check():
 
 	else:
 		print (G + ' [ pwned ]' + W)
-		json_out = rqst.content.decode('utf8', 'ignore')
+		json_out = rqst.content.decode()
 		simple_out = json.loads(json_out)
 
 		for item in simple_out:
@@ -151,14 +151,14 @@ def filtered_check():
 def dump():
 	dumplist = []
 	print ('\n' + G + '[+]' + C + ' Looking for Dumps...' + W, end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent, cookies= cookies)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent)
 	sc = rqst.status_code
 
 	if sc != 200:
 		print (R + ' [ No Dumps Found ]' + W)
 	else:
 		print (G + ' [ Dumps Found ]' + W)
-		json_out = rqst.content.decode('utf-8', 'ignore')
+		json_out = rqst.content.decode()
 		simple_out = json.loads(json_out)
 
 		for item in simple_out:
@@ -168,7 +168,7 @@ def dump():
 				link = item['Id']
 				try:
 					url = 'https://www.pastebin.com/raw/{}'.format(link)
-					page = requests.get(url, timeout = 5)
+					page = requests.get(url)
 					sc = page.status_code
 					if sc != 404:
 						dumplist.append(url)
@@ -177,7 +177,7 @@ def dump():
 			elif (item['Source']) == 'AdHocUrl':
 				url = item['Id']
 				try:
-					page = requests.get(url, timeout = 5)
+					page = requests.get(url)
 					sc = page.status_code
 					if sc != 404:
 						dumplist.append(url)
@@ -192,7 +192,7 @@ def dump():
 			time.sleep(1.1)
 			try:
 				page = requests.get(entry)
-				dict = page.content.decode('utf-8', 'ignore')
+				dict = page.content.decode()
 				passwd = re.search('{}:(\w+)'.format(addr), dict)
 				if passwd:
 					print (G + '[+] ' + W + passwd.group(1))
@@ -208,7 +208,7 @@ def domains_list():
 	domains = []
 	print ('\n' + G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
 	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches')
-	json_out = rqst.content.decode('utf8', 'ignore')
+	json_out = rqst.content.decode()
 	simple_out = json.loads(json_out)
 	for item in simple_out:
 		domain_name = item['Domain']
@@ -222,7 +222,7 @@ def domain_check():
 	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches?domain={}'.format(check_domain))
 	sc = rqst.status_code
 	if sc == 200:
-		json_out = rqst.content.decode('utf8', 'ignore')
+		json_out = rqst.content.decode()
 		simple_out = json.loads(json_out)
 		if len(simple_out) != 0:
 			print (G + ' [ pwned ]' + W)
