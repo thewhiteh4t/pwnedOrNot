@@ -14,30 +14,10 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.1.8'
+version = '1.1.9'
 
 useragent = {'User-Agent' : 'pwnedornot'}
-#cookies = ''
 start = ''
-
-def update():
-	print (G + '[+]' + C + ' Checking for updates...' + W + '\n')
-	updated_version = requests.get('https://raw.githubusercontent.com/thewhiteh4t/pwnedOrNot/master/version.txt', timeout = 5)
-	updated_version = updated_version.text.split(' ')[1]
-	updated_version = updated_version.strip()
-	if updated_version != version:
-		print (G + '[!]' + C + ' A New Version is Available : ' + W + updated_version)
-		ans = input(G + '[!]' + C + ' Update ? [y/n] : ' + W)
-		if ans == 'y':
-			print ('\n' + G + '[+]' + C + ' Updating...' + '\n' + W)
-			subprocess.check_output(['git', 'reset', '--hard', 'origin/master'])
-			subprocess.check_output(['git', 'pull'])
-			print (G + '[+]' + C + ' Script Updated...Please Execute Again...')
-			exit()
-	else:
-		print (G + '[+]' + C + ' Script is up-to-date...' + '\n')
-
-
 
 def banner():
 	if sys.platform == 'win32':
@@ -59,8 +39,6 @@ def banner():
 
 def main():
 	global addr, start
-	#print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W)
-	#cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
 	start = time.time()
 
 	if list_domain is True:
@@ -72,7 +50,7 @@ def main():
 	elif addr != None and domain == None:
 		check()
 	elif file != None and domain == None:
-		print ('\n' + G + '[+]' + C + ' Reading Emails Addresses from ' + W + '{}'.format(file))
+		print (G + '[+]' + C + ' Reading Emails Addresses from ' + W + '{}'.format(file) + '\n')
 		with open(file) as dict:
 			for line in dict:
 				line = line.strip()
@@ -81,8 +59,8 @@ def main():
 					check()
 					time.sleep(1.6)
 	elif file != None and domain != None:
-		print ('\n' + G + '[+]' + C + ' Reading Emails Addresses from ' + W + '{}'.format(file))
-		print ('\n' + G + '[+]' + C + ' Domain : ' + W + domain)
+		print (G + '[+]' + C + ' Reading Emails Addresses from ' + W + '{}'.format(file) + '\n')
+		print (G + '[+]' + C + ' Domain : ' + W + domain)
 		with open(file) as dict:
 			for line in dict:
 				line = line.strip()
@@ -95,7 +73,7 @@ def main():
 		exit()
 
 def check():
-	print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
+	print (G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
 	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, verify = True)
 	sc = rqst.status_code
 
@@ -106,7 +84,7 @@ def check():
 
 	else:
 		print (G + ' [ pwned ]' + W)
-		json_out = rqst.content.decode()
+		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
 		for item in simple_out:
 			print ( '\n'
@@ -132,7 +110,7 @@ def filtered_check():
 
 	else:
 		print (G + ' [ pwned ]' + W)
-		json_out = rqst.content.decode()
+		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
 
 		for item in simple_out:
@@ -156,21 +134,20 @@ def dump():
 	if sc != 200:
 		print (R + ' [ No Dumps Found ]' + W)
 	else:
-		print (G + ' [ Dumps Found ]' + W)
-		json_out = rqst.content.decode()
+		print (G + ' [ Dumps Found ]' + W + '\n')
+		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
 
 		for item in simple_out:
-			time.sleep(1.6)
-
 			if (item['Source']) == 'Pastebin':
 				link = item['Id']
 				try:
 					url = 'https://www.pastebin.com/raw/{}'.format(link)
 					page = requests.get(url)
 					sc = page.status_code
-					if sc != 404:
+					if sc == 200:
 						dumplist.append(url)
+						print (G + '[+]' + C + ' Dumps Found : ' + W + str(len(dumplist)), end='\r')
 				except requests.exceptions.ConnectionError:
 					pass
 			elif (item['Source']) == 'AdHocUrl':
@@ -178,20 +155,19 @@ def dump():
 				try:
 					page = requests.get(url)
 					sc = page.status_code
-					if sc != 404:
+					if sc == 200:
 						dumplist.append(url)
+						print (G + '[+]' + C + ' Dumps Found : ' + W + str(len(dumplist)), end='\r')
 				except requests.exceptions.ConnectionError:
 					pass
 
-	print ('\n' + G + '[+]' + C + ' Found ' + W + str(len(dumplist)) + C + ' Dumps' + W)
-
 	if len(dumplist) != 0:
-		print ('\n' + G + '[+]' + C + ' Passwords:' + W + '\n')
+		print ('\n\n' + G + '[+]' + C + ' Passwords:' + W + '\n')
 		for entry in dumplist:
 			time.sleep(1.1)
 			try:
 				page = requests.get(entry)
-				dict = page.content.decode()
+				dict = page.content.decode('utf-8', 'ignore')
 				passwd = re.search('{}:(\w+)'.format(addr), dict)
 				if passwd:
 					print (G + '[+] ' + W + passwd.group(1))
@@ -207,7 +183,7 @@ def domains_list():
 	domains = []
 	print ('\n' + G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
 	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches')
-	json_out = rqst.content.decode()
+	json_out = rqst.content.decode('utf-8', 'ignore')
 	simple_out = json.loads(json_out)
 	for item in simple_out:
 		domain_name = item['Domain']
@@ -221,7 +197,7 @@ def domain_check():
 	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches?domain={}'.format(check_domain))
 	sc = rqst.status_code
 	if sc == 200:
-		json_out = rqst.content.decode()
+		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
 		if len(simple_out) != 0:
 			print (G + ' [ pwned ]' + W)
@@ -268,7 +244,6 @@ try:
 	list_domain = arg.list
 	check_domain = arg.check
 
-	update()
 	main()
 	quit()
 except KeyboardInterrupt:
