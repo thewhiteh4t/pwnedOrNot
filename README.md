@@ -22,7 +22,7 @@ pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api t
 And with all this information **pwnedOrNot** can easily find passwords for compromised emails if the dump is accessible and it contains the password
 
 #### Tested on
-* **Kali Linux 18.2**
+* **Kali Linux 2019.1**
 * **Ubuntu 18.04**
 * **Kali Nethunter**
 * **Termux**
@@ -31,8 +31,7 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 **Ubuntu / Kali Linux / Nethunter / Termux**
 
 ```bash
-chmod 777 install.sh
-./install.sh
+pip3 install -r requirements.txt
 ```
 
 ## Usage
