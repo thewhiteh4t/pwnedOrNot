@@ -5,8 +5,6 @@ OSINT Tool to Find Passwords for Compromised Email Accounts
 <p align="center">
 <img src="https://img.shields.io/badge/HaveIBeenPwned-v2-blue.svg?style=plastic">
 <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
-<img src="https://img.shields.io/badge/Termux-✔-red.svg?style=plastic">
-<img src="https://img.shields.io/badge/NetHunter-✔-red.svg?style=plastic">
 </p>
 
 pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
@@ -87,4 +85,4 @@ python3 pwnedornot.py --check <domain name>
 ```
 
 ## Demo
-[YouTube](https://www.youtube.com/watch?v=R_Y_QzVmERA)
+![Youtube](https://i.imgur.com/aSM6dKc.png)](https://www.youtube.com/watch?v=R_Y_QzVmERA)
