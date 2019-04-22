@@ -7,7 +7,6 @@ import json
 import time
 import argparse
 import requests
-import cfscrape
 import subprocess
 
 R = '\033[31m' # red
@@ -59,7 +58,7 @@ def banner():
 	print (G + '[>]' + C + ' Version    : ' + W + version + '\n')
 
 def main():
-	global addr, cookies, start
+	global addr, start
 	#print (G + '[+]' + C + ' Bypassing Cloudflare Restriction...' + W)
 	#cookies, user_agent = cfscrape.get_tokens('https://haveibeenpwned.com/api/v2/breachedaccount/test@example.com', user_agent='pwnedornot')
 	start = time.time()
