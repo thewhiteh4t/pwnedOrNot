@@ -34,6 +34,12 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 pip3 install -r requirements.txt
 ```
 
+## Updates
+```bash
+cd pwnedOrNot
+git pull
+```
+
 ## Usage
 ```bash
 python3 pwnedornot.py -h
