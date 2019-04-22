@@ -37,8 +37,6 @@ chmod 777 install.sh
 ./install.sh
 ```
 
-[![asciicast](https://asciinema.org/a/200221.png)](https://asciinema.org/a/200221)
-
 ## Usage
 ```bash
 python3 pwnedornot.py -h
@@ -87,8 +85,6 @@ python3 pwnedornot.py -c <domain name>
 #OR
 python3 pwnedornot.py --check <domain name>
 ```
-
-[![asciicast](https://asciinema.org/a/200225.png)](https://asciinema.org/a/200225)
 
 ## Demo
 [YouTube](https://www.youtube.com/watch?v=R_Y_QzVmERA)
