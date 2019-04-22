@@ -85,4 +85,4 @@ python3 pwnedornot.py --check <domain name>
 ```
 
 ## Demo
-![Youtube](https://i.imgur.com/aSM6dKc.png)](https://www.youtube.com/watch?v=R_Y_QzVmERA)
+[![Youtube](https://i.imgur.com/aSM6dKc.png)](https://www.youtube.com/watch?v=R_Y_QzVmERA)
