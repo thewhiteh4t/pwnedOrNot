@@ -23,15 +23,18 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 
 #### Tested on
 * **Kali Linux 2019.1**
+* **BlackArch Linux**
 * **Ubuntu 18.04**
 * **Kali Nethunter**
 * **Termux**
 
 ## Installation
-**Ubuntu / Kali Linux / Nethunter / Termux**
+**Ubuntu / Kali Linux / BlackArch Linux / Nethunter / Termux**
 
 ```bash
-pip3 install -r requirements.txt
+git clone https://github.com/thewhiteh4t/pwnedOrNot.git
+cd pwnedOrNot
+pip3 install requests
 ```
 
 ## Updates
