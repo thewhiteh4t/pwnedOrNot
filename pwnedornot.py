@@ -7,14 +7,13 @@ import json
 import time
 import argparse
 import requests
-import subprocess
 
 R = '\033[31m' # red
 G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.1.9'
+version = '1.2.0'
 
 useragent = {'User-Agent' : 'pwnedornot'}
 start = ''
@@ -74,15 +73,10 @@ def main():
 
 def check():
 	print (G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers= useragent, verify = True)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers=useragent, timeout=10)
 	sc = rqst.status_code
 
-	if sc == 404:
-		print (R + ' [ Not Breached ]' + W)
-		if nodumps is not True:
-			dump()
-
-	else:
+	if sc == 200:
 		print (G + ' [ pwned ]' + W)
 		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
@@ -97,18 +91,27 @@ def check():
 				+ G + '[+]' + C + ' Spam        : ' + W + str(item['IsSpamList']))
 		if nodumps is not True:
 			dump()
+	elif sc == 404:
+		print (R + ' [ Not Breached ]' + W)
+		if nodumps is not True:
+			dump()
+	elif sc == 503:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 503 : ' + W + 'Request Blocked by Cloudflare DDoS Protection')
+	elif sc == 403:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by Cloudflare')
+	else:
+		print ('\n')
+		print (R + '[-]' + C + ' An Unknown Error Occurred')
+		print (rqst.text)
 
 def filtered_check():
 	print ('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}?domain={}'.format(addr, domain), headers= useragent, verify = True)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}?domain={}'.format(addr, domain), headers=useragent, verify=True, timeout=10)
 	sc = rqst.status_code
 
-	if sc == 404:
-		print (R + ' [ Not Breached ]' + W)
-		if nodumps is not True:
-			dump()
-
-	else:
+	if sc == 200:
 		print (G + ' [ pwned ]' + W)
 		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
@@ -124,11 +127,25 @@ def filtered_check():
 				+ G + '[+]' + C + ' Spam        : ' + W + str(item['IsSpamList']))
 		if nodumps is not True:
 			dump()
+	elif sc == 404:
+		print (R + ' [ Not Breached ]' + W)
+		if nodumps is not True:
+			dump()
+	elif sc == 503:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 503 : ' + W + 'Request Blocked by Cloudflare DDoS Protection')
+	elif sc == 403:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by Cloudflare')
+	else:
+		print ('\n')
+		print (R + '[-]' + C + ' An Unknown Error Occurred')
+		print (rqst.text)
 
 def dump():
 	dumplist = []
 	print ('\n' + G + '[+]' + C + ' Looking for Dumps...' + W, end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent)
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent, timeout=10)
 	sc = rqst.status_code
 
 	if sc != 200:
@@ -143,7 +160,7 @@ def dump():
 				link = item['Id']
 				try:
 					url = 'https://www.pastebin.com/raw/{}'.format(link)
-					page = requests.get(url)
+					page = requests.get(url, timeout=10)
 					sc = page.status_code
 					if sc == 200:
 						dumplist.append(url)
@@ -153,7 +170,7 @@ def dump():
 			elif (item['Source']) == 'AdHocUrl':
 				url = item['Id']
 				try:
-					page = requests.get(url)
+					page = requests.get(url, timeout=10)
 					sc = page.status_code
 					if sc == 200:
 						dumplist.append(url)
@@ -166,7 +183,7 @@ def dump():
 		for entry in dumplist:
 			time.sleep(1.1)
 			try:
-				page = requests.get(entry)
+				page = requests.get(entry, timeout=10)
 				dict = page.content.decode('utf-8', 'ignore')
 				passwd = re.search('{}:(\w+)'.format(addr), dict)
 				if passwd:
@@ -181,20 +198,29 @@ def dump():
 
 def domains_list():
 	domains = []
-	print ('\n' + G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches')
-	json_out = rqst.content.decode('utf-8', 'ignore')
-	simple_out = json.loads(json_out)
-	for item in simple_out:
-		domain_name = item['Domain']
-		if len(domain_name) != 0:
-			print (G + '[+] ' + W + str(domain_name))
-			domains.append(domain_name)
-	print ('\n' + G + '[+]' + C + ' Total : ' + W + str(len(domains)))
+	print (G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches', headers=useragent, timeout=10)
+	sc = rqst.status_code
+	if sc == 200:
+		json_out = rqst.content.decode('utf-8', 'ignore')
+		simple_out = json.loads(json_out)
+		for item in simple_out:
+			domain_name = item['Domain']
+			if len(domain_name) != 0:
+				print (G + '[+] ' + W + str(domain_name))
+				domains.append(domain_name)
+		print ('\n' + G + '[+]' + C + ' Total : ' + W + str(len(domains)))
+	elif sc == 503:
+		print (R + '[-]' + C + ' Error 503 : ' + W + 'Request Blocked by Cloudflare DDoS Protection')
+	elif sc == 403:
+		print (R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by Cloudflare')
+	else:
+		print (R + '[-]' + C + ' An Unknown Error Occurred')
+		print (rqst.text)
 
 def domain_check():
-	print ('\n' + G + '[+]' + C + ' Domain Name : ' + W + check_domain, end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches?domain={}'.format(check_domain))
+	print (G + '[+]' + C + ' Domain Name : ' + W + check_domain, end = '')
+	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches?domain={}'.format(check_domain), headers=useragent, timeout=10)
 	sc = rqst.status_code
 	if sc == 200:
 		json_out = rqst.content.decode('utf-8', 'ignore')
@@ -214,6 +240,16 @@ def domain_check():
 					+ G + '[+]' + C + ' Data Types  : ' + W + str(item['DataClasses']))
 		else:
 			print (R + ' [ Not Breached ]' + W)
+	elif sc == 503:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 503 : ' + W + 'Request Blocked by Cloudflare DDoS Protection')
+	elif sc == 403:
+		print ('\n')
+		print (R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by Cloudflare')
+	else:
+		print ('\n')
+		print (R + '[-]' + C + ' An Unknown Error Occurred')
+		print (rqst.text)
 
 def quit():
 	global start
