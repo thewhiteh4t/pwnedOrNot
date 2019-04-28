@@ -5,8 +5,7 @@ LABEL \
       author="thewhiteh4t" \
       maintainer="Vincent Nadal <vincent.nadal@orange.fr>"
 RUN apt-get update && \
-    apt-get -y install python3 python3-pip nodejs
+    apt-get -y install python3 python3-pip
 RUN pip3 install requests
-RUN pip3 install cfscrape
 COPY * ./
 ENTRYPOINT ["python3", "pwnedornot.py"]
