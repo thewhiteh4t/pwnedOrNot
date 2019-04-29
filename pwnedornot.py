@@ -44,11 +44,11 @@ def main():
 		domains_list()
 	elif check_domain:
 		domain_check()
-	elif addr != None and domain != None:
+	elif addr is not None and domain is not None:
 		filtered_check()
-	elif addr != None and domain == None:
+	elif addr is not None and domain is None:
 		check()
-	elif file != None and domain == None:
+	elif file is not None and domain is None:
 		print (G + '[+]' + C + ' Reading Emails Addresses from ' + W + '{}'.format(file) + '\n')
 		with open(file) as dict:
 			for line in dict:
