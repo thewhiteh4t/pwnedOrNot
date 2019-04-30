@@ -9,6 +9,13 @@ OSINT Tool to Find Passwords for Compromised Email Accounts
 
 pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
+<p align="center">
+  <br>
+  Available in
+  <br>
+  <img src="https://i.imgur.com/IPiAUZi.png">
+</p>
+
 ## Features
 [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) offers a lot of information about the compromised email, some useful information is displayed by this script:
 * Name of Breach
@@ -29,12 +36,18 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 * **Termux**
 
 ## Installation
-**Ubuntu / Kali Linux / BlackArch Linux / Nethunter / Termux**
+**Ubuntu / Kali Linux / Nethunter / Termux**
 
 ```bash
 git clone https://github.com/thewhiteh4t/pwnedOrNot.git
 cd pwnedOrNot
 pip3 install requests
+```
+
+**BlackArch Linux**
+
+```bash
+pacman -S pwnedornot
 ```
 
 ## Updates
