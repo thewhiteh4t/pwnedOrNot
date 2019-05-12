@@ -15,7 +15,7 @@ W = '\033[0m'  # white
 
 version = '1.2.3'
 
-useragent = {'User-Agent': 'pwnedornot'}
+useragent = {'User-Agent': 'pwnedOrNot'}
 start = ''
 
 def banner():
