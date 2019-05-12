@@ -5,8 +5,6 @@ import re
 import sys
 import json
 import time
-import random
-import string
 import argparse
 import requests
 
@@ -15,12 +13,9 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.2'
+version = '1.2.3'
 
-letters = string.ascii_lowercase
-ua_string = ''.join(random.choice(letters) for i in range(20))
-
-useragent = {'User-Agent': '{}'.format(ua_string)}
+useragent = {'User-Agent': 'pwnedornot'}
 start = ''
 
 def banner():
@@ -106,6 +101,10 @@ def check():
 	elif sc == 403:
 		print('\n')
 		print(R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by haveibeenpwned API')
+		print('\n-------------------------------------------------')
+		print('Email This Complete Response at troy@troyhunt.com')
+		print('-------------------------------------------------\n')
+		print(rqst.text)
 	else:
 		print('\n')
 		print(R + '[-]' + C + ' An Unknown Error Occurred')
