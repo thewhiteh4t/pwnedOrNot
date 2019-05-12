@@ -5,6 +5,8 @@ import re
 import sys
 import json
 import time
+import random
+import string
 import argparse
 import requests
 
@@ -13,9 +15,12 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.1'
+version = '1.2.2'
 
-useragent = {'User-Agent': 'pwned-or-not'}
+letters = string.ascii_lowercase
+ua_string = ''.join(random.choice(letters) for i in range(20))
+
+useragent = {'User-Agent': '{}'.format(ua_string)}
 start = ''
 
 def banner():
@@ -100,7 +105,7 @@ def check():
 		print(R + '[-]' + C + ' Error 503 : ' + W + 'Request Blocked by Cloudflare DDoS Protection')
 	elif sc == 403:
 		print('\n')
-		print(R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by Cloudflare')
+		print(R + '[-]' + C + ' Error 403 : ' + W + 'Request Blocked by haveibeenpwned API')
 	else:
 		print('\n')
 		print(R + '[-]' + C + ' An Unknown Error Occurred')
