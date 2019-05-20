@@ -18,6 +18,8 @@ pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api t
 
 <p align="center">Featured on : <a href="https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/">Jake Creps Blog</a>
 
+## [**Changelog**](https://github.com/thewhiteh4t/pwnedOrNot/wiki/Changelog)
+
 ## Features
 [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) offers a lot of information about the compromised email, some useful information is displayed by this script:
 * Name of Breach
