@@ -13,7 +13,7 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.4'
+version = '1.2.5'
 
 useragent = {'User-Agent': 'pwnedOrNot'}
 start = ''
@@ -169,6 +169,8 @@ def dump():
 					if sc == 200:
 						dumplist.append(url)
 						print(G + '[+]' + C + ' Dumps Found : ' + W + str(len(dumplist)), end='\r')
+					if len(dumplist) == 0:
+							print(R + '[-]' + C + ' Dumps are not Accessible...' + W)
 				except requests.exceptions.ConnectionError:
 					pass
 			elif (item['Source']) == 'AdHocUrl':
@@ -179,6 +181,8 @@ def dump():
 					if sc == 200:
 						dumplist.append(url)
 						print(G + '[+]' + C + ' Dumps Found : ' + W + str(len(dumplist)), end='\r')
+					if len(dumplist) == 0:
+							print(R + '[-]' + C + ' Dumps are not Accessible...' + W)
 				except requests.exceptions.ConnectionError:
 					pass
 
