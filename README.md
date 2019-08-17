@@ -3,11 +3,11 @@
 OSINT Tool to Find Passwords for Compromised Email Accounts
 </h4>
 <p align="center">
-<img src="https://img.shields.io/badge/HaveIBeenPwned-v2-blue.svg?style=plastic">
-<img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
+  <img src="https://img.shields.io/badge/HaveIBeenPwned-v3-blue.svg?style=plastic">
+  <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
 </p>
 
-pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
+pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v2 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
 <p align="center">
   <br>
@@ -16,12 +16,18 @@ pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v2) v2 api t
   <img src="https://i.imgur.com/IPiAUZi.png">
 </p>
 
-<p align="center">Featured on : <a href="https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/">Jake Creps Blog</a>
+## Featured 
+* [**OSINT Collection Tools for Pastebin - Jake Creps**](https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/)
+
+## Get In Touch
+* [**Twitter**](https://twitter.com/thewhiteh4t)
+* [**Telegram**](https://t.me/thewhiteh4t)
+* [**Blog**](https://thewhiteh4t.github.io)
 
 ## [**Changelog**](https://github.com/thewhiteh4t/pwnedOrNot/wiki/Changelog)
 
 ## Features
-[**haveibeenpwned**](https://haveibeenpwned.com/API/v2) offers a lot of information about the compromised email, some useful information is displayed by this script:
+[**haveibeenpwned**](https://haveibeenpwned.com/API/v3) offers a lot of information about the compromised email, some useful information is displayed by this script:
 * Name of Breach
 * Domain Name
 * Date of Breach
