@@ -13,9 +13,10 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.5'
+version = '1.2.6'
 
-useragent = {'User-Agent': 'pwnedOrNot'}
+key = ''
+useragent = {'User-Agent': 'pwnedOrNot', 'hibp-api-key': key}
 start = ''
 
 def banner():
@@ -25,7 +26,7 @@ def banner():
 		os.system('clear')
 
 	banner = r'''
-	                          ______       _   __      __
+                                  ______       _   __      __
     ____ _      ______  ___  ____/ / __ \_____/ | / /___  / /_
    / __ \ | /| / / __ \/ _ \/ __  / / / / ___/  |/ / __ \/ __/
   / /_/ / |/ |/ / / / /  __/ /_/ / /_/ / /  / /|  / /_/ / /_
@@ -35,6 +36,23 @@ def banner():
 	print(G + banner + W)
 	print(G + '[>]' + C + ' Created by : ' + W + 'thewhiteh4t')
 	print(G + '[>]' + C + ' Version    : ' + W + version + '\n')
+
+def api_key():
+	global key
+	try:
+		with open('key.txt', 'r') as keyfile:
+			key = keyfile.readline()
+			key = key.strip()
+			print(G + '[+]' + C + ' API Key Found...' + W + '\n')
+	except FileNotFoundError:
+		print(R + '[-]' + C + ' API Key Not Found...' + W + '\n')
+		print(G + '[+]' + C + ' Get your API Key : ' + W + 'https://haveibeenpwned.com/API/Key' + '\n')
+		enter_key = input(G + '[+]' + C + ' Enter your API Key : ' + W)
+		enter_key = enter_key.strip()
+		with open('key.txt', 'w') as keyfile:
+			keyfile.write(enter_key)
+		key_path = os.getcwd() + '/key.txt'
+		print(G + '[+]' + C + ' Saved API Key in : ' + W + key_path + '\n')
 
 def main():
 	global addr, start
@@ -73,7 +91,7 @@ def main():
 
 def check():
 	print(G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}'.format(addr), headers=useragent, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}'.format(addr), headers=useragent, timeout=10)
 	sc = rqst.status_code
 
 	if sc == 200:
@@ -112,7 +130,7 @@ def check():
 
 def filtered_check():
 	print('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end='')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breachedaccount/{}?domain={}'.format(addr, domain), headers=useragent, verify=True, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}?domain={}'.format(addr, domain), headers=useragent, verify=True, timeout=10)
 	sc = rqst.status_code
 
 	if sc == 200:
@@ -149,7 +167,7 @@ def filtered_check():
 def dump():
 	dumplist = []
 	print('\n' + G + '[+]' + C + ' Looking for Dumps...' + W, end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/pasteaccount/{}'.format(addr), headers= useragent, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/pasteaccount/{}'.format(addr), headers=useragent, timeout=10)
 	sc = rqst.status_code
 
 	if sc != 200:
@@ -207,7 +225,7 @@ def dump():
 def domains_list():
 	domains = []
 	print(G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches', headers=useragent, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breaches', headers=useragent, timeout=10)
 	sc = rqst.status_code
 	if sc == 200:
 		json_out = rqst.content.decode('utf-8', 'ignore')
@@ -228,7 +246,7 @@ def domains_list():
 
 def domain_check():
 	print(G + '[+]' + C + ' Domain Name : ' + W + check_domain, end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v2/breaches?domain={}'.format(check_domain), headers=useragent, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breaches?domain={}'.format(check_domain), headers=useragent, timeout=10)
 	sc = rqst.status_code
 	if sc == 200:
 		json_out = rqst.content.decode('utf-8', 'ignore')
@@ -288,6 +306,7 @@ try:
 	list_domain = arg.list
 	check_domain = arg.check
 
+	api_key()
 	main()
 	quit()
 except KeyboardInterrupt:
