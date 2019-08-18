@@ -13,10 +13,10 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.6'
+version = '1.2.7'
 
 key = ''
-useragent = {'User-Agent': 'pwnedOrNot', 'hibp-api-key': key}
+useragent = ''
 start = ''
 
 def banner():
@@ -38,12 +38,13 @@ def banner():
 	print(G + '[>]' + C + ' Version    : ' + W + version + '\n')
 
 def api_key():
-	global key
+	global key, useragent
 	try:
 		with open('key.txt', 'r') as keyfile:
 			key = keyfile.readline()
 			key = key.strip()
 			print(G + '[+]' + C + ' API Key Found...' + W + '\n')
+			useragent = {'User-Agent': 'pwnedOrNot', 'hibp-api-key': key}
 	except FileNotFoundError:
 		print(R + '[-]' + C + ' API Key Not Found...' + W + '\n')
 		print(G + '[+]' + C + ' Get your API Key : ' + W + 'https://haveibeenpwned.com/API/Key' + '\n')
@@ -93,7 +94,7 @@ def check():
 	print(G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
 	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}'.format(addr), headers=useragent, timeout=10)
 	sc = rqst.status_code
-
+	
 	if sc == 200:
 		print(G + ' [ pwned ]' + W)
 		json_out = rqst.content.decode('utf-8', 'ignore')
@@ -227,6 +228,7 @@ def domains_list():
 	print(G + '[+]' + C + ' Fetching List of Breached Domains...' + W + '\n')
 	rqst = requests.get('https://haveibeenpwned.com/api/v3/breaches', headers=useragent, timeout=10)
 	sc = rqst.status_code
+	
 	if sc == 200:
 		json_out = rqst.content.decode('utf-8', 'ignore')
 		simple_out = json.loads(json_out)
