@@ -13,7 +13,7 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.7'
+version = '1.2.8'
 
 key = ''
 useragent = ''
