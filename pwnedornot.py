@@ -92,7 +92,7 @@ def main():
 
 def check():
 	print(G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end = '')
-	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}'.format(addr), headers=useragent, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}'.format(addr), headers=useragent, params={'truncateResponse': 'false'}, timeout=10)
 	sc = rqst.status_code
 	
 	if sc == 200:
@@ -131,7 +131,7 @@ def check():
 
 def filtered_check():
 	print('\n' + G + '[+]' + C + ' Checking Breach status for ' + W + '{}'.format(addr), end='')
-	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}?domain={}'.format(addr, domain), headers=useragent, verify=True, timeout=10)
+	rqst = requests.get('https://haveibeenpwned.com/api/v3/breachedaccount/{}?domain={}'.format(addr, domain), headers=useragent, params={'truncateResponse': 'false'}, verify=True, timeout=10)
 	sc = rqst.status_code
 
 	if sc == 200:
