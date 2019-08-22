@@ -1,19 +1,19 @@
 <p align="center"><img src="https://i.imgur.com/xgaojFM.png"></p>
 <h4 align="center">
-OSINT Tool to Find Passwords for Compromised Email Accounts
+OSINT Tool for Finding Passwords of Compromised Email Accounts
 </h4>
 <p align="center">
   <img src="https://img.shields.io/badge/HaveIBeenPwned-v3-blue.svg?style=plastic">
   <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
 </p>
 
-pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v2 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
+pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
 <p align="center">
   <br>
   Available in
   <br>
-  <img src="https://i.imgur.com/IPiAUZi.png">
+  <img src="https://i.imgur.com/1wJVDV5.png">
 </p>
 
 ## Featured 
