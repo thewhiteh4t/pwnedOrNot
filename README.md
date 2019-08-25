@@ -9,12 +9,9 @@ OSINT Tool for Finding Passwords of Compromised Email Accounts
 
 pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
-<p align="center">
-  <br>
-  Available in
-  <br>
-  <img src="https://i.imgur.com/1wJVDV5.png">
-</p>
+| Available                            | in                                   |
+|--------------------------------------|--------------------------------------|
+| ![](https://i.imgur.com/1wJVDV5.png) | ![](https://i.imgur.com/z36xL8c.png) |
 
 ## Featured 
 * [**OSINT Collection Tools for Pastebin - Jake Creps**](https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/)
