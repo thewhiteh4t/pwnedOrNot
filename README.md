@@ -1,25 +1,28 @@
 <p align="center"><img src="https://i.imgur.com/xgaojFM.png"></p>
-<h4 align="center">
-OSINT Tool for Finding Passwords of Compromised Email Accounts
-</h4>
+
+<h4 align="center">OSINT Tool for Finding Passwords of Compromised Email Accounts</h4>
+
 <p align="center">
   <img src="https://img.shields.io/badge/HaveIBeenPwned-v3-blue.svg?style=plastic">
   <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
 </p>
 
-pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
+<p align="center">
+  <a href="https://twitter.com/thewhiteh4t"><b>Twitter</b></a>
+  <span> - </span>
+  <a href="https://t.me/thewhiteh4t"><b>Telegram</b></a>
+  <span> - </span>
+  <a href="https://thewhiteh4t.github.io"><b>Blog</b></a>
+</p>
 
 | Available                            | in                                   |
 |--------------------------------------|--------------------------------------|
 | ![](https://i.imgur.com/1wJVDV5.png) | ![](https://i.imgur.com/z36xL8c.png) |
 
-## Featured 
-* [**OSINT Collection Tools for Pastebin - Jake Creps**](https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/)
+pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
-## Get In Touch
-* [**Twitter**](https://twitter.com/thewhiteh4t)
-* [**Telegram**](https://t.me/thewhiteh4t)
-* [**Blog**](https://thewhiteh4t.github.io)
+## Featured 
+<a href="https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/">OSINT Collection Tools for Pastebin - Jake Creps</a>
 
 ## [**Changelog**](https://github.com/thewhiteh4t/pwnedOrNot/wiki/Changelog)
 
