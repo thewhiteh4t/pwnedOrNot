@@ -15,9 +15,10 @@
   <a href="https://thewhiteh4t.github.io"><b>Blog</b></a>
 </p>
 
-| Available                            | in                                   |
-|--------------------------------------|--------------------------------------|
-| ![](https://i.imgur.com/1wJVDV5.png) | ![](https://i.imgur.com/z36xL8c.png) |
+| Available | in | |
+|-|-|-|
+| [BlackArch Linux](https://blackarch.org/) | [SecBSD](https://secbsd.org/) | [Tsurugi Linux](https://tsurugi-linux.org/) |
+| ![](https://i.imgur.com/1wJVDV5.png) | ![](https://i.imgur.com/z36xL8c.png) | ![Tsurugi Linux](https://i.imgur.com/S1ylcp7.jpg) |
 
 pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
 
