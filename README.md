@@ -1,4 +1,4 @@
-<p align="center"><img src="https://i.imgur.com/xgaojFM.png"></p>
+<p align="center"><img src="https://i.imgur.com/ojjMbWX.jpg"></p>
 
 <h4 align="center">OSINT Tool for Finding Passwords of Compromised Email Accounts</h4>
 
