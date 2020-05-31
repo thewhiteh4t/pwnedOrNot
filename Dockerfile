@@ -1,11 +1,14 @@
-FROM debian:latest
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-LABEL \
-      author="thewhiteh4t" \
-      maintainer="Vincent Nadal <vincent.nadal@orange.fr>"
-RUN apt-get update && \
-    apt-get -y install python3 python3-pip
+FROM alpine:latest
+RUN apk update
+RUN apk add \
+git \
+python3 \
+py3-pip \
+python3-dev
+RUN rm -rf /var/cache/apk/*
+WORKDIR /root
+RUN git clone https://github.com/thewhiteh4t/pwnedOrNot.git
+WORKDIR /root/pwnedOrNot/
+RUN pip3 install --upgrade pip
 RUN pip3 install requests
-COPY * ./
 ENTRYPOINT ["python3", "pwnedornot.py"]
