@@ -11,4 +11,3 @@ RUN git clone https://github.com/thewhiteh4t/pwnedOrNot.git
 WORKDIR /root/pwnedOrNot/
 RUN pip3 install --upgrade pip
 RUN pip3 install requests
-ENTRYPOINT ["python3", "pwnedornot.py"]
