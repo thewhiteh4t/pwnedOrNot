@@ -3,11 +3,6 @@
 <h4 align="center">OSINT Tool for Finding Passwords of Compromised Email Accounts</h4>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/HaveIBeenPwned-v3-blue.svg?style=plastic">
-  <img src="https://img.shields.io/badge/Python-3-brightgreen.svg?style=plastic">
-</p>
-
-<p align="center">
   <a href="https://twitter.com/thewhiteh4t"><b>Twitter</b></a>
   <span> - </span>
   <a href="https://t.me/thewhiteh4t"><b>Telegram</b></a>
@@ -20,15 +15,34 @@
 | [BlackArch Linux](https://blackarch.org/) | [SecBSD](https://secbsd.org/) | [Tsurugi Linux](https://tsurugi-linux.org/) |
 | ![](https://i.imgur.com/1wJVDV5.png) | ![](https://i.imgur.com/z36xL8c.png) | ![Tsurugi Linux](https://i.imgur.com/S1ylcp7.jpg) |
 
-pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api to test email accounts and tries to find the **password** in **Pastebin Dumps**.
+---
 
-## Featured 
-<a href="https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/">OSINT Collection Tools for Pastebin - Jake Creps</a>
+pwnedOrNot works in two phases. In the **first** phase it tests the given email address using [**`HaveIBeenPwned v3 API`**](https://haveibeenpwned.com/API/v3) to find if the account have been breached in the past and in the **second** phase it searches the **password** in available **public dumps**.
 
-## [**Changelog**](https://github.com/thewhiteh4t/pwnedOrNot/wiki/Changelog)
+**`An API Key is required to use the tool. You can purchase a key from HIBP website linked below`**
+
+https://haveibeenpwned.com/API/v3
+
+---
+
+## Featured
+
+<a href="https://jakecreps.com/2019/05/08/osint-collection-tools-for-pastebin/">**> OSINT Collection Tools for Pastebin - Jake Creps**</a>
+
+<a href="https://eforensicsmag.com/download/open-source-forensic-tools/">**> eForensics Magazine May 2020**</a>
+
+---
+
+## Changelog
+
+https://github.com/thewhiteh4t/pwnedOrNot/wiki/Changelog
+
+---
 
 ## Features
-[**haveibeenpwned**](https://haveibeenpwned.com/API/v3) offers a lot of information about the compromised email, some useful information is displayed by this script:
+
+[**haveibeenpwned**](https://haveibeenpwned.com/API/v3) offers a lot of information about the compromised email, pwnedOrNot displays most useful information such as :
+
 * Name of Breach
 * Domain Name
 * Date of Breach
@@ -37,7 +51,15 @@ pwnedOrNot uses [**haveibeenpwned**](https://haveibeenpwned.com/API/v3) v3 api t
 * Retirement status
 * Spam Status
 
-And with all this information **pwnedOrNot** can easily find passwords for compromised emails if the dump is accessible and it contains the password
+### About Passwords
+
+The chances of finding passwords depends upon the following factors :
+
+* If public dumps are available for the email address
+* If the public dumps are accessible
+  * Sometimes the dumps are removed
+* If the public dump contains password
+  * Sometimes a dump contains only email addresses
 
 #### Tested on
 * **Kali Linux**
@@ -45,13 +67,16 @@ And with all this information **pwnedOrNot** can easily find passwords for compr
 * **Kali Nethunter**
 * **Termux**
 
+> Windows users are suggested to use Kali Linux WSL2 or a VM
+
 ## Installation
 **Ubuntu / Kali Linux / Nethunter / Termux**
 
 ```bash
 git clone https://github.com/thewhiteh4t/pwnedOrNot.git
 cd pwnedOrNot
-pip3 install requests
+chmod +x install.sh
+./install.sh
 ```
 
 **BlackArch Linux**
@@ -123,5 +148,5 @@ python3 pwnedornot.py -c <domain name>
 python3 pwnedornot.py --check <domain name>
 ```
 
-## Demo
+## Demo [ YouTube ]
 [![Youtube](https://i.imgur.com/aSM6dKc.png)](https://www.youtube.com/watch?v=R_Y_QzVmERA)
