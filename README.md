@@ -88,9 +88,9 @@ pacman -S pwnedornot
 **Docker**
 
 ```bash
-docker pull thewhiteh4t/pwnedornot
-docker create -it --name pon thewhiteh4t/pwnedornot
-docker start pon -i
+git clone https://github.com/thewhiteh4t/pwnedOrNot.git
+docker build -t pon .
+docker run -it pon
 ```
 
 ## Updates
