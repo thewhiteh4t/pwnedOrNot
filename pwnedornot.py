@@ -28,7 +28,7 @@ G = '\033[32m' # green
 C = '\033[36m' # cyan
 W = '\033[0m'  # white
 
-version = '1.2.9'
+version = '1.3.0'
 
 key = ''
 useragent = ''
@@ -297,7 +297,7 @@ def domain_check():
 			if sc == 200:
 				json_out = rqst.content.decode('utf-8', 'ignore')
 				simple_out = loads(json_out)
-				print(simple_out)
+
 				if len(simple_out) != 0:
 					print(f' {G}[ pwned ]{W}')
 					for item in simple_out:
