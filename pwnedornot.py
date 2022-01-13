@@ -35,12 +35,12 @@ C = '\033[36m' # cyan
 W = '\033[0m'  # white
 Y = '\033[33m' # yellow
 
-version = '1.3.0'
+version = '1.3.0.1'
 
 key = ''
 useragent = ''
 start = ''
-idle_time = 0.5
+idle_time = 1.6
 
 import requests
 from os import system
@@ -55,7 +55,7 @@ from json import loads, dumps
 from html2text import html2text
 
 system("color")
-home = getenv('HOME')
+
 if "HOME" in environ:
     home = getenv('HOME')
 if "USERPROFILE" in environ:
@@ -74,7 +74,7 @@ response_codes = {
 
 def banner():
 	banner = r'''
-						    ______       _   __      __
+                                  ______       _   __      __
     ____ _      ______  ___  ____/ / __ \_____/ | / /___  / /_
    / __ \ | /| / / __ \/ _ \/ __  / / / / ___/  |/ / __ \/ __/
   / /_/ / |/ |/ / / / /  __/ /_/ / /_/ / /  / /|  / /_/ / /_
@@ -99,7 +99,7 @@ def read_config():
 			print(f'{G}[+] {C}Get your API Key : {W}https://haveibeenpwned.com/API/Key \n')
 			enter_key = input(f'{G}[+]' + C + ' Enter your API Key : ' + W)
 			enter_key = enter_key.strip()
-		  
+			
 			with open(conf_path, 'w') as keyfile:
 				key_dict = {'api_key': enter_key}
 				json_data = dumps(key_dict)
@@ -167,21 +167,21 @@ def check():
 				print(f'\n{G}[+] {C}Total Breaches : {W}{len(simple_out)}')
 				for item in simple_out:
 					print(f'\n' \
-					f'{G}[+] {C}Breach      : {W}{str(item["Title"])} \n' \
-					f'{G}[+] {C}Domain      : {W}{str(item["Domain"])} \n' \
-					f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])} \n' \
-					f'{G}[+] {C}BreachedInfo: {W}{str(item["DataClasses"])} \n' \
-					f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])} \n' \
-					f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])} \n' \
-					f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])} \n' \
-					f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])} '
+						f'{G}[+] {C}Breach      : {W}{str(item["Title"])} \n' \
+						f'{G}[+] {C}Domain      : {W}{str(item["Domain"])} \n' \
+						f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])} \n' \
+						f'{G}[+] {C}BreachedInfo: {W}{str(item["DataClasses"])} \n' \
+						f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])} \n' \
+						f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])} \n' \
+						f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])} \n' \
+						f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])}'
 					)
 				print(f'-----\n')
 				if nodumps != True:
 					dump()
 				if filepawned is not None:
 					with open(filepawned, 'a') as fileout:
-					fileout.write(''+addr+'\n')	
+						fileout.write(''+addr+'\n')	
 			elif sc == 404:
 				print(f' {R}[ not pwned ]{W}')
 				if nodumps != True:
@@ -214,14 +214,14 @@ def filtered_check():
 
 				for item in simple_out:
 					print(f'\n' \
-					f'{G}[+] {C}Breach      : {W}{str(item["Title"])} \n' \
-					f'{G}[+] {C}Domain      : {W}{str(item["Domain"])} \n' \
-					f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])} \n' \
-					f'{G}[+] {C}BreachedInfo: {W}{str(item["DataClasses"])} \n' \
-					f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])} \n' \
-					f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])} \n' \
-					f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])} \n' \
-					f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])}'
+						f'{G}[+] {C}Breach      : {W}{str(item["Title"])} \n' \
+						f'{G}[+] {C}Domain      : {W}{str(item["Domain"])} \n' \
+						f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])} \n' \
+						f'{G}[+] {C}BreachedInfo: {W}{str(item["DataClasses"])} \n' \
+						f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])} \n' \
+						f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])} \n' \
+						f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])} \n' \
+						f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])}'
 					)
 				if nodumps is not True:
 					dump()
@@ -230,9 +230,10 @@ def filtered_check():
 				if nodumps is not True:
 					dump()
 			elif sc == 429:
-					print(f' {Y}[ retry in {idle_time}s]{W}')
-					sleep(idle_time)
-					check()					
+				retry_sleep = float(rqst.headers['Retry-After'])
+				print(f' {Y}[ retry in {retry_sleep}s]{W}')
+				sleep(retry_sleep)
+				check()					
 			else:
 				print(f'\n{R}[-] {C}Status {code} : {W}{desc}')
 
@@ -261,10 +262,10 @@ def dump():
 					page = requests.get(url, timeout=10)
 					sc = page.status_code
 					if sc == 200:
-					dumplist.append(url)
-					print(f'{G}[+] {C}Dumps Found : {W}{len(dumplist)}', end='\r')
+						dumplist.append(url)
+						print(f'{G}[+] {C}Dumps Found : {W}{len(dumplist)}', end='\r')
 					if len(dumplist) == 0:
-						print(f'{R}[-] {C}Dumps are not Accessible...{W}')
+							print(f'{R}[-] {C}Dumps are not Accessible...{W}')
 				except requests.exceptions.ConnectionError:
 					pass
 			elif (item['Source']) == 'AdHocUrl':
@@ -273,10 +274,10 @@ def dump():
 					page = requests.get(url, timeout=10)
 					sc = page.status_code
 					if sc == 200:
-					dumplist.append(url)
-					print(f'{G}[+] {C}Dumps Found : {W}{len(dumplist)}', end='\r')
+						dumplist.append(url)
+						print(f'{G}[+] {C}Dumps Found : {W}{len(dumplist)}', end='\r')
 					if len(dumplist) == 0:
-						print(f'{R}[-] {C}Dumps are not Accessible...{W}')
+							print(f'{R}[-] {C}Dumps are not Accessible...{W}')
 				except Exception:
 					pass
 
@@ -292,9 +293,9 @@ def dump():
 					print(f'{G}[+] {W}{passwd.group(1)}')
 				elif not passwd:
 					for line in dict.splitlines():
-					passwd = search('(.*{}.*)'.format(addr), line)
-					if passwd:
-						print(f'{G}[+] {W}{passwd.group(0)}')
+						passwd = search('(.*{}.*)'.format(addr), line)
+						if passwd:
+							print(f'{G}[+] {W}{passwd.group(0)}')
 			except requests.exceptions.ConnectionError:
 				pass
 
@@ -350,8 +351,8 @@ def domains_list():
 				for item in simple_out:
 					domain_name = item['Domain']
 					if len(domain_name) != 0:
-					print(G + '[+] ' + W + str(domain_name))
-					domains.append(domain_name)
+						print(G + '[+] ' + W + str(domain_name))
+						domains.append(domain_name)
 				print(f'\n{G}[+] {C}Total : {W}{len(domains)}')
 			else:
 				print(f'\n{R}[-] {C}Status {code} : {W}{desc}')
@@ -374,18 +375,18 @@ def domain_check():
 				if len(simple_out) != 0:
 					print(f' {G}[ pwned ]{W}')
 					for item in simple_out:
-					print(f'\n' \
-						f'{G}[+] {C}Breach      : {W}{str(item["Title"])}\n' \
-						f'{G}[+] {C}Domain      : {W}{str(item["Domain"])}\n' \
-						f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])}\n' \
-						f'{G}[+] {C}Pwn Count   : {W}{str(item["PwnCount"])}\n' \
-						f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])}\n' \
-						f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])}\n' \
-						f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])}\n' \
-						f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])}\n' \
-						f'{G}[+] {C}Data Types  : {W}{str(item["DataClasses"])}\n' \
-						f'{G}[+] {C}Description : {W}{html2text(str(item["Description"]))}'
-					)
+						print(f'\n' \
+							f'{G}[+] {C}Breach      : {W}{str(item["Title"])}\n' \
+							f'{G}[+] {C}Domain      : {W}{str(item["Domain"])}\n' \
+							f'{G}[+] {C}Date        : {W}{str(item["BreachDate"])}\n' \
+							f'{G}[+] {C}Pwn Count   : {W}{str(item["PwnCount"])}\n' \
+ 							f'{G}[+] {C}Fabricated  : {W}{str(item["IsFabricated"])}\n' \
+							f'{G}[+] {C}Verified    : {W}{str(item["IsVerified"])}\n' \
+							f'{G}[+] {C}Retired     : {W}{str(item["IsRetired"])}\n' \
+							f'{G}[+] {C}Spam        : {W}{str(item["IsSpamList"])}\n' \
+							f'{G}[+] {C}Data Types  : {W}{str(item["DataClasses"])}' \
+							f'{G}[+] {C}Description : {W}{html2text(str(item["Description"]))}'
+						)
 				else:
 					print(f' {R}[ Not Breached ]{W}')
 			elif sc == 404:
