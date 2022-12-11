@@ -247,7 +247,12 @@ def dump():
 	)
 	sc = rqst.status_code
 
-	if sc != 200:
+	if sc == 429:
+		retry_sleep = float(rqst.headers['Retry-After'])
+		print(f' {Y}[ retry in {retry_sleep}s]{W}')
+		sleep(retry_sleep)
+		dump()
+	elif sc != 200:
 		print(f' {R}[ No Dumps Found ]{W}')
 	else:
 		print(f' {G}[ Dumps Found ]{W}\n')
@@ -328,6 +333,11 @@ def breach_info():
 					)
 				else:
 					print(f' {R}[ Not Breached ]{W}')
+			elif sc == 429:
+				retry_sleep = float(rqst.headers['Retry-After'])
+				print(f' {Y}[ retry in {retry_sleep}s]{W}')
+				sleep(retry_sleep)
+				breach_info()
 			elif sc == 404:
 				print(f' {R}[ Not Breached ]{W}')
 			else:
