@@ -6,6 +6,7 @@ echo
 echo "[!] Installing Requests..."
 echo "--------------------------"
 pip3 install requests
+pip3 install html2text
 echo "--------------------------"
 
 echo "[!] Creating Directory : $HOME/.config/pwnedornot"
